@@ -39,6 +39,10 @@ Variaveis esperadas pelo `config/settings.py`:
 
 - Nomes de modelos devem estar em ingles e no singular, por exemplo `Room` e
   `AccessSession`.
+- Apps Django do projeto devem ficar no pacote `apps/`.
+- O dominio operacional deve ser dividido em dois apps principais:
+  `apps.access` para acesso, RFID, salas, sessoes e auditoria; e
+  `apps.attendance` para presenca e QR Code.
 - Regras de negocio de abertura, fechamento e presenca devem ficar em servicos
   ou casos de uso, nao diretamente em views ou admin.
 - Eventos de RFID e QR Code devem ser persistidos para auditoria antes ou junto

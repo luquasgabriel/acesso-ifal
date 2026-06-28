@@ -150,6 +150,21 @@ de QR Code, corresponde ao token do QR Code.
 - `AccessEvent` deve permitir auditar o motivo de cada liberacao, bloqueio,
   entrada ou saida.
 
+## Organizacao em apps
+
+A implementacao Django deve manter os apps do projeto dentro do pacote
+`apps/`.
+
+- `apps.accounts`: autenticacao, usuarios e evolucao de papeis gerais.
+- `apps.access`: regras e registros ligados a salas, cartoes RFID,
+  aulas planejadas, sessoes de acesso e eventos de auditoria.
+- `apps.attendance`: registros de entrada e saida por QR Code e calculo do
+  status de presenca.
+
+Os apps `access` e `attendance` representam os dois apps de dominio previstos
+para esta etapa. A existencia dos apps nao significa que todos os modelos e
+servicos ja estejam implementados.
+
 ## Estados sugeridos
 
 ### Room.status

@@ -5,8 +5,11 @@
 O projeto esta em uma base Django com a seguinte estrutura principal:
 
 - `config/`: configuracoes Django, rotas, ASGI e WSGI;
-- `accounts/`: app de usuarios;
+- `apps/accounts/`: app de usuarios e autenticacao;
+- `apps/access/`: app previsto para acesso, RFID, salas, sessoes e auditoria;
+- `apps/attendance/`: app previsto para presenca e QR Code;
 - `theme/`: app de tema com Tailwind e DaisyUI;
+- `templates/`: templates globais do projeto;
 - `manage.py`: entrada de comandos Django;
 - `requirements.txt`: dependencias Python;
 - `README.md`: resumo do projeto.
@@ -26,8 +29,8 @@ O projeto esta em uma base Django com a seguinte estrutura principal:
 
 ## Lacunas em relacao aos requisitos
 
-- Ainda nao existem apps de dominio para salas, aulas, presenca, RFID ou QR
-  Code.
+- Os apps `access` e `attendance` ainda estao sem modelos, servicos e
+  endpoints de dominio implementados.
 - O modelo `User` ainda nao diferencia professor, aluno e administrador.
 - Ainda nao existem entidades para `Student`, `Teacher`, `Room`,
   `ClassSchedule`, `AccessSession`, `AttendanceRecord` e `AccessEvent`.
@@ -41,19 +44,18 @@ O projeto esta em uma base Django com a seguinte estrutura principal:
   possivelmente por UTF-16/UTF-16LE. Isso pode atrapalhar instalacoes com
   `pip install -r requirements.txt` se nao for normalizado para UTF-8.
 
-## Estrutura recomendada para evolucao
+## Estrutura adotada para evolucao
 
-Sugestao de apps Django:
+Os apps Django do projeto devem ficar dentro do pacote `apps/`.
 
-- `accounts`: autenticacao, usuarios e papeis gerais;
-- `people`: dados academicos de alunos e professores;
-- `rooms`: cadastro de salas e QR Codes;
-- `schedules`: aulas planejadas e regras de horario;
-- `access`: sessoes de abertura/fechamento, eventos RFID e auditoria;
-- `attendance`: registros de entrada, saida e status de presenca.
+- `apps/accounts`: autenticacao, usuarios e papeis gerais;
+- `apps/access`: salas, cartoes RFID, aulas planejadas, abertura e fechamento
+  de sessoes, eventos externos e auditoria;
+- `apps/attendance`: registros de entrada, saida e status de presenca por QR
+  Code.
 
-Essa divisao mantem o app `accounts` focado em autenticacao e evita misturar
-regras academicas com usuarios de login.
+Essa divisao mantem o app `accounts` focado em autenticacao e concentra o
+dominio operacional em dois apps: `access` e `attendance`.
 
 ## Proxima etapa tecnica recomendada
 

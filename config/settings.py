@@ -45,7 +45,9 @@ AUTH_USER_MODEL = 'accounts.User'
 INSTALLED_APPS = [
     'tailwind',
     'theme',
-    'accounts',
+    'apps.accounts.apps.AccountsConfig',
+    'apps.access.apps.AccessConfig',
+    'apps.attendance.apps.AttendanceConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
