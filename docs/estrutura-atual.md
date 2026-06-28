@@ -57,6 +57,11 @@ Os apps Django do projeto devem ficar dentro do pacote `apps/`.
 Essa divisao mantem o app `accounts` focado em autenticacao e concentra o
 dominio operacional em dois apps: `access` e `attendance`.
 
+A estrutura interna dos apps de dominio deve seguir o padrao documentado no
+`docs/desenvolvimento.md`: pacotes `models/`, `views/` e `services/`, com
+modelos e views separados por arquivo, uso de function based views e criacao de
+`constants`, `utils` e outros modulos somente quando necessario.
+
 ## Proxima etapa tecnica recomendada
 
 1. Definir os modelos de dominio em ingles.

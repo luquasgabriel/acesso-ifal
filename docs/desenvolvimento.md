@@ -50,6 +50,46 @@ Variaveis esperadas pelo `config/settings.py`:
 - Validacoes criticas devem ocorrer no backend.
 - Tokens de QR Code devem ser opacos e nao devem expor IDs sequenciais.
 
+## Estrutura interna dos apps
+
+Cada app Django deve ser organizado de forma modular, separando arquivos por
+responsabilidade e evitando arquivos grandes com muitas classes ou funcoes.
+
+- Modelos devem ficar em um pacote `models/`, com um modelo principal por
+  arquivo. O pacote deve expor os modelos necessarios em `models/__init__.py`
+  para manter compatibilidade com o carregamento do Django.
+- Views devem ficar em um pacote `views/`, com uma view ou grupo pequeno de
+  views relacionadas por arquivo. O projeto deve usar function based views como
+  padrao para telas e endpoints HTTP.
+- Regras de negocio, validacoes de fluxo e integracoes de dominio devem ficar
+  em `services/`, separadas das views, templates e admin.
+- Constantes compartilhadas devem ficar em `constants.py` ou em um pacote
+  `constants/`, quando o volume justificar.
+- Funcoes auxiliares sem regra de negocio critica devem ficar em `utils.py` ou
+  em um pacote `utils/`, quando houver necessidade real de organizacao.
+- Outros modulos, como `selectors`, `forms`, `permissions` ou `tasks`, podem ser
+  criados quando ajudarem a separar responsabilidades sem esconder regra de
+  negocio importante fora do backend.
+
+Exemplo de estrutura esperada para um app de dominio:
+
+```text
+apps/access/
+  models/
+    __init__.py
+    room.py
+    access_session.py
+  views/
+    __init__.py
+    room.py
+    access_session.py
+  services/
+    __init__.py
+    room_access.py
+  constants.py
+  utils.py
+```
+
 ## Testes esperados
 
 Ao implementar o dominio, priorizar testes para:
