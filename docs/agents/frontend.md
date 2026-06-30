@@ -25,10 +25,6 @@ Construir telas administrativas e operacionais para usuarios do Acesso IFAL.
 |----------|------|-----------|
 | `registration/login.html` | Autenticacao | Login |
 | `registration/logged_out.html` | Autenticacao | Confirmacao de logout |
-| `registration/password_reset_form.html` | Autenticacao | Solicitar redefinicao |
-| `registration/password_reset_done.html` | Autenticacao | Email enviado |
-| `registration/password_reset_confirm.html` | Autenticacao | Nova senha |
-| `registration/password_reset_complete.html` | Autenticacao | Senha alterada |
 | `dashboard/home.html` | Dashboard | Painel operacional |
 | `dashboard/history.html` | Dashboard | Historico de sessoes de acesso |
 | `rooms/list.html` | Salas | Lista de salas |

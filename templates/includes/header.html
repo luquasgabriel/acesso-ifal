@@ -21,31 +21,18 @@
             </div>
         </button>
 
-        <div class="dropdown dropdown-end">
-            <button tabindex="0" class="btn btn-ghost gap-2">
-                <div class="avatar placeholder">
-                    <div class="w-8 rounded-full bg-primary text-primary-content">
-                        <span class="text-sm font-semibold">{{ user.get_full_name|default:user.username|first|upper }}</span>
-                    </div>
-                </div>
-                <span class="hidden max-w-36 truncate text-sm sm:inline">{{ user.get_full_name|default:user.username }}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        <div class="avatar placeholder">
+            <div class="w-8 rounded-full bg-primary text-primary-content">
+                <span class="text-sm font-semibold">{{ user.get_full_name|default:user.username|first|upper }}</span>
+            </div>
+        </div>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-ghost btn-square text-error" aria-label="Sair" title="Sair">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
                 </svg>
             </button>
-            <ul tabindex="0" class="menu dropdown-content z-50 mt-3 w-56 rounded-box bg-base-100 p-2 shadow">
-                <li class="menu-title"><span>Conta</span></li>
-                {% if user.is_staff %}
-                <li><a href="{% url 'admin:index' %}">Administração</a></li>
-                {% endif %}
-                <li class="menu-title"><span>Sessão</span></li>
-                <li>
-                    <form method="post" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="text-error">Sair</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
+        </form>
     </div>
 </header>

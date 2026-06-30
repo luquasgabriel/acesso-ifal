@@ -20,10 +20,6 @@ cadastro e edicao de dados acontecem no Django Admin.
 |----------|------|-----------|
 | `registration/login.html` | `/accounts/login/` | Login |
 | `registration/logged_out.html` | `/accounts/logout/` | Saida |
-| `registration/password_reset_form.html` | `/accounts/password-reset/` | Solicitar redefinicao |
-| `registration/password_reset_done.html` | `/accounts/password-reset/done/` | Email enviado |
-| `registration/password_reset_confirm.html` | `/accounts/password-reset/<uidb64>/<token>/` | Nova senha |
-| `registration/password_reset_complete.html` | `/accounts/password-reset/complete/` | Senha alterada |
 | `dashboard/home.html` | `/dashboard/` | Painel operacional |
 | `dashboard/history.html` | `/dashboard/historico/` | Historico de sessoes |
 | `rooms/list.html` | `/dashboard/salas/` | Lista de salas |
