@@ -23,7 +23,7 @@ cadastro e edicao de dados acontecem no Django Admin.
 | `dashboard/home.html` | `/dashboard/` | Painel operacional |
 | `dashboard/history.html` | `/dashboard/historico/` | Historico de sessoes |
 | `rooms/list.html` | `/dashboard/salas/` | Lista de salas |
-| `rooms/status.html` | `/dashboard/salas/status/` | Acesso por sala |
+| `rooms/status.html` | `/dashboard/salas/status/` | Status das Salas |
 | `people/teacher_list.html` | `/dashboard/professores/` | Lista de professores |
 | `schedules/list.html` | `/dashboard/horarios/` | Lista de horarios |
 | `access/rfid_list.html` | `/dashboard/acesso/rfid/` | Cartoes RFID |
@@ -35,7 +35,7 @@ O menu lateral deve destacar:
 
 - Dashboard;
 - Historico;
-- Acesso por sala;
+- Status das Salas;
 - Salas;
 - Horarios;
 - Professores;

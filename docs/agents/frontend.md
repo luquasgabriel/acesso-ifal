@@ -28,7 +28,7 @@ Construir telas administrativas e operacionais para usuarios do Acesso IFAL.
 | `dashboard/home.html` | Dashboard | Painel operacional |
 | `dashboard/history.html` | Dashboard | Historico de sessoes de acesso |
 | `rooms/list.html` | Salas | Lista de salas |
-| `rooms/status.html` | Salas | Acesso por sala |
+| `rooms/status.html` | Salas | Status das Salas |
 | `people/teacher_list.html` | Pessoas | Lista de professores |
 | `schedules/list.html` | Horarios | Lista de horarios |
 | `access/rfid_list.html` | Acesso | Cartoes RFID |
