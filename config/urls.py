@@ -21,6 +21,8 @@ from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
 from django.urls import include, path
 
+from apps.access.views import rfid_event
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +37,7 @@ urlpatterns = [
     path('accounts/password-reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
     path('dashboard/', include(('config.dashboard_urls', 'dashboard'), namespace='dashboard')),
+    path('api/rfid/events/', rfid_event, name='rfid_event'),
 ]
 
 if settings.DEBUG:

@@ -14,8 +14,6 @@
                     <option value="">Todos os tipos</option>
                     <option value="rfid_open_attempt" {% if request.GET.event_type == "rfid_open_attempt" %}selected{% endif %}>RFID - Tentativa de abertura</option>
                     <option value="rfid_close_attempt" {% if request.GET.event_type == "rfid_close_attempt" %}selected{% endif %}>RFID - Tentativa de fechamento</option>
-                    <option value="qr_check_in" {% if request.GET.event_type == "qr_check_in" %}selected{% endif %}>QR Code - Entrada</option>
-                    <option value="qr_check_out" {% if request.GET.event_type == "qr_check_out" %}selected{% endif %}>QR Code - Saída</option>
                 </select>
                 <select name="room" class="select select-bordered select-sm bg-base-100">
                     <option value="">Todas as salas</option>
@@ -33,7 +31,7 @@
                 <input type="date" name="date_to" class="input input-bordered input-sm bg-base-100"
                        value="{{ request.GET.date_to }}" />
                 <button type="submit" class="btn btn-primary btn-sm text-base-content">Filtrar</button>
-                <a href="{% url 'dashboard:events' %}" class="btn btn-ghost btn-sm">Limpar</a>
+                <a href="{% url 'dashboard:access_events' %}" class="btn btn-ghost btn-sm">Limpar</a>
             </form>
         </div>
     </div>
@@ -61,10 +59,6 @@
                                 <span class="badge badge-info badge-sm">RFID Abertura</span>
                                 {% elif event.event_type == "rfid_close_attempt" %}
                                 <span class="badge badge-warning badge-sm">RFID Fechamento</span>
-                                {% elif event.event_type == "qr_check_in" %}
-                                <span class="badge badge-success badge-sm">QR Entrada</span>
-                                {% elif event.event_type == "qr_check_out" %}
-                                <span class="badge badge-ghost badge-sm">QR Saída</span>
                                 {% endif %}
                             </td>
                             <td>{{ event.room.name|default:"--" }}</td>

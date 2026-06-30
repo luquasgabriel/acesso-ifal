@@ -4,125 +4,47 @@
 {% block title %}Entrar - Acesso IFAL{% endblock title %}
 
 {% block body %}
-<div class="flex min-h-screen">
-    <div class="flex-1 flex items-center justify-center bg-white">
-        <div class="w-full max-w-sm mx-auto">
-            <div class="rounded-2xl shadow-sm p-4 sm:p-8">
-                <h1 class="text-2xl sm:text-3xl font-bold text-center" style="color: #232323;">Entrar</h1>
-                <p class="text-center mt-2" style="color: #969696;">
-                    Por favor, autentique-se para continuar
-                </p>
-
-                <form method="post" class="mt-8 space-y-5">
-                    {% csrf_token %}
-
-                    {% if form.non_field_errors %}
-                    <div class="alert alert-error">
-                        {% for error in form.non_field_errors %}
-                        <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-
-                    <div class="form-control">
-                        <label class="label" for="id_username">
-                            <span class="label-text font-medium" style="color: #232323;">Email</span>
-                        </label>
-                        <input type="text" name="username" id="id_username"
-                               class="input text-base w-full bg-neutral text-base-content placeholder:text-base-content/40 border-neutral"
-                               placeholder="seu@email.com"
-                               value="{{ form.username.value|default:'' }}"
-                               required autofocus>
-                        {% if form.username.errors %}
-                        <label class="label">
-                            <span class="label-text-alt text-error">{{ form.username.errors|join:", " }}</span>
-                        </label>
-                        {% endif %}
-                    </div>
-
-                    <div class="form-control">
-                        <label class="label" for="id_password">
-                            <span class="label-text font-medium" style="color: #232323;">Senha</span>
-                        </label>
-                        <input type="password" name="password" id="id_password"
-                               class="input text-base w-full bg-neutral text-base-content placeholder:text-base-content/40 border-neutral"
-                               placeholder="senha" required>
-                        {% if form.password.errors %}
-                        <label class="label">
-                            <span class="label-text-alt text-error">{{ form.password.errors|join:", " }}</span>
-                        </label>
-                        {% endif %}
-                    </div>
-
-                    <div class="flex items-center gap-2">
-                        <input type="checkbox" name="remember" id="id_remember" class="checkbox checkbox-primary checkbox-sm">
-                        <label for="id_remember" class="text-sm" style="color: #232323;">Manter conectado</label>
-                    </div>
-
-                    {% if next %}
-                    <input type="hidden" name="next" value="{{ next }}">
-                    {% endif %}
-
-                    <button type="submit" class="btn w-full font-medium"
-                            style="background-color: #67C180; border-color: #67C180; color: #232323;">
-                        Entrar
-                    </button>
-                </form>
-
-                <div class="divider my-6" style="color: #969696;">ou</div>
-
-                <p class="text-center text-sm" style="color: #969696;">
-                    <a href="{% url 'password_reset' %}" class="link" style="color: #67C180;">Esqueceu a senha?</a>
-                </p>
+<main class="flex min-h-screen items-center justify-center bg-base-200 p-4">
+    <div class="card w-full max-w-sm bg-base-100 shadow-sm">
+        <div class="card-body">
+            <div class="mb-2 text-center">
+                <img src="{% static 'images/logo_ifal_login.png' %}" alt="IFAL" class="mx-auto h-14 w-auto">
+                <h1 class="mt-4 text-2xl font-bold">Acesso IFAL</h1>
+                <p class="mt-1 text-sm text-base-content/60">Entre para continuar</p>
             </div>
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-error">
+                    {% for error in form.non_field_errors %}<span>{{ error }}</span>{% endfor %}
+                </div>
+                {% endif %}
+
+                <label class="form-control">
+                    <div class="label"><span class="label-text">Usuário ou email</span></div>
+                    <input type="text" name="username" id="id_username" class="input input-bordered w-full" value="{{ form.username.value|default:'' }}" required autofocus>
+                    {% if form.username.errors %}
+                    <div class="label"><span class="label-text-alt text-error">{{ form.username.errors|join:", " }}</span></div>
+                    {% endif %}
+                </label>
+
+                <label class="form-control">
+                    <div class="label"><span class="label-text">Senha</span></div>
+                    <input type="password" name="password" id="id_password" class="input input-bordered w-full" required>
+                    {% if form.password.errors %}
+                    <div class="label"><span class="label-text-alt text-error">{{ form.password.errors|join:", " }}</span></div>
+                    {% endif %}
+                </label>
+
+                {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+
+                <button type="submit" class="btn btn-primary w-full mt-6">Entrar</button>
+            </form>
+
+            <a href="{% url 'password_reset' %}" class="link link-primary mt-2 text-center text-sm">Esqueci minha senha</a>
         </div>
     </div>
-
-    <div class="hidden lg:flex flex-1 items-center justify-center p-8" style="background-color: #D7F5E1;">
-        <div class="w-full max-w-md">
-            <div class="text-center mb-8">
-                <img src="{% static 'images/logo_ifal_login.png' %}" alt="IFAL"
-                     class="h-20 w-auto mx-auto" />
-            </div>
-            <h2 class="text-2xl font-bold text-center" style="color: #232323;">Acesso IFAL</h2>
-            <p class="mt-2 text-center text-sm" style="color: #71717A;">Sistema de controle de acesso e presen&ccedil;a</p>
-
-            <div class="space-y-5 mt-8">
-                <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style="background-color: rgba(103,193,128,0.3);">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" style="color: #232323;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="font-medium text-sm" style="color: #232323;">Abertura por RFID</p>
-                        <p class="text-xs" style="color: #71717A;">Salas liberadas com cart&atilde;o do professor</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style="background-color: rgba(103,193,128,0.3);">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" style="color: #232323;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h3m12 0h.01M12 4v1m-6 11h2m-2-4h.01" />
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="font-medium text-sm" style="color: #232323;">Presen&ccedil;a por QR Code</p>
-                        <p class="text-xs" style="color: #71717A;">Registro de entrada e sa&iacute;da dos alunos</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5" style="background-color: rgba(103,193,128,0.3);">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" style="color: #232323;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="font-medium text-sm" style="color: #232323;">Relat&oacute;rios e auditoria</p>
-                        <p class="text-xs" style="color: #71717A;">Hist&oacute;rico completo de acessos</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</main>
 {% endblock body %}

@@ -38,6 +38,8 @@ CSRF_TRUSTED_ORIGINS = config(
     cast=Csv()
 )
 
+RFID_API_TOKEN = config('RFID_API_TOKEN', default='')
+
 
 # Application definition
 AUTH_USER_MODEL = 'accounts.User'
@@ -47,7 +49,6 @@ INSTALLED_APPS = [
     'theme',
     'apps.accounts.apps.AccountsConfig',
     'apps.access.apps.AccessConfig',
-    'apps.attendance.apps.AttendanceConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

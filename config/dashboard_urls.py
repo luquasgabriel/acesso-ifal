@@ -1,31 +1,15 @@
-from django.shortcuts import render
 from django.urls import path
-from django.contrib.auth.decorators import login_required
 
-
-@login_required
-def home(request):
-    return render(request, 'dashboard/home.html')
-
-
-@login_required
-def attendance(request):
-    return render(request, 'attendance/record_list.html')
-
-
-@login_required
-def history(request):
-    return render(request, 'dashboard/history.html')
-
-
-@login_required
-def profile(request):
-    return render(request, 'profile/view.html')
+from apps.access import views as access_views
 
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('presencas/', attendance, name='attendance'),
-    path('historico/', history, name='history'),
-    path('perfil/', profile, name='profile'),
+    path("", access_views.home, name="home"),
+    path("historico/", access_views.history, name="history"),
+    path("salas/", access_views.room_list, name="rooms"),
+    path("salas/status/", access_views.room_status, name="room_status"),
+    path("professores/", access_views.teacher_list, name="teachers"),
+    path("horarios/", access_views.schedule_list, name="schedules"),
+    path("acesso/rfid/", access_views.rfid_list, name="rfid_cards"),
+    path("acesso/eventos/", access_views.event_list, name="access_events"),
 ]

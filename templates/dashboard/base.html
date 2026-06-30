@@ -1,35 +1,24 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block body %}
-<div class="flex min-h-screen">
-    <div id="sidebar-wrapper" class="hidden md:block">
-        {% include "includes/sidebar.html" %}
+<div class="drawer lg:drawer-open min-h-screen bg-base-200">
+    <input id="dashboard-drawer" type="checkbox" class="drawer-toggle" />
+
+    <div class="drawer-content flex min-h-screen flex-col">
+        {% include "includes/header.html" %}
+        <main class="flex-1 overflow-x-hidden p-4 sm:p-6 lg:p-8">
+            {% include "includes/messages.html" %}
+            <div class="mx-auto w-full max-w-7xl">
+                {% block dashboard_content %}{% endblock dashboard_content %}
+            </div>
+        </main>
     </div>
 
-    <div class="flex-1 flex flex-col min-w-0">
-        {% include "includes/header.html" %}
-
-        <main class="flex-1 p-4 sm:p-6 overflow-auto bg-base-100">
-            {% include "includes/messages.html" %}
-            {% block dashboard_content %}{% endblock dashboard_content %}
-        </main>
+    <div class="drawer-side z-40">
+        <label for="dashboard-drawer" aria-label="Fechar menu" class="drawer-overlay"></label>
+        {% include "includes/sidebar.html" %}
     </div>
 </div>
 
 {% block modals %}{% endblock modals %}
-
-<script>
-(function() {
-    var sidebar = document.getElementById('sidebar-wrapper');
-    var links = sidebar ? sidebar.querySelectorAll('a') : [];
-    for (var i = 0; i < links.length; i++) {
-        links[i].addEventListener('click', function() {
-            if (window.innerWidth < 768) {
-                sidebar.classList.add('hidden');
-            }
-        });
-    }
-})();
-</script>
 {% endblock body %}

@@ -45,18 +45,8 @@
                 </div>
                 {% endif %}
 
-                <div class="card-actions mt-2">
-                    {% if room.status == "available" %}
-                    <button class="btn btn-sm w-full" style="background-color: #67C180; border: none; color: #232323;"
-                            onclick="open_room_modal.showModal()">
-                        Abrir Remotamente
-                    </button>
-                    {% elif room.status == "in_use" %}
-                    <button class="btn btn-sm btn-warning w-full"
-                            onclick="close_room_modal.showModal()">
-                        Fechar Sala
-                    </button>
-                    {% endif %}
+                <div class="mt-2 text-xs text-base-content/50">
+                    A abertura e o fechamento são registrados por eventos RFID.
                 </div>
             </div>
         </div>
@@ -75,7 +65,3 @@
     </div>
 </div>
 {% endblock dashboard_content %}
-
-{% block modals %}
-{% include "access/open_room_modal.html" %}
-{% endblock modals %}

@@ -1,51 +1,45 @@
 {% load static %}
 {% url 'dashboard:home' as dashboard_url %}
-{% url 'dashboard:attendance' as attendance_url %}
 {% url 'dashboard:history' as history_url %}
-<aside class="w-64 min-h-screen flex flex-col"
-       style="background-color: #D7F5E1;">
-    <div class="flex justify-center py-6">
-        <img src="{% static 'images/logo_ifal.png' %}" alt="IFAL"
-             class="h-16 w-auto object-contain" />
-    </div>
-    <ul class="menu rounded-box flex-1 px-3">
-        <li>
-            <a href="{{ dashboard_url }}"
-               class="{% if request.path == dashboard_url %}active font-medium{% endif %}"
-               style="{% if request.path == dashboard_url %}color: #232323;{% else %}color: #4A4A4A;{% endif %}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                Dashboard
-            </a>
-        </li>
-        <li>
-            <a href="{{ attendance_url }}"
-               class="{% if request.path == attendance_url %}active font-medium{% endif %}"
-               style="{% if request.path == attendance_url %}color: #232323;{% else %}color: #4A4A4A;{% endif %}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                </svg>
-                Presenças
-            </a>
-        </li>
-        <li>
-            <a href="{{ history_url }}"
-               class="{% if request.path == history_url %}active font-medium{% endif %}"
-               style="{% if request.path == history_url %}color: #232323;{% else %}color: #4A4A4A;{% endif %}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Histórico
-            </a>
-        </li>
-    </ul>
+{% url 'dashboard:rooms' as rooms_url %}
+{% url 'dashboard:room_status' as room_status_url %}
+{% url 'dashboard:teachers' as teachers_url %}
+{% url 'dashboard:schedules' as schedules_url %}
+{% url 'dashboard:rfid_cards' as rfid_cards_url %}
+{% url 'dashboard:access_events' as access_events_url %}
 
-    <div class="border-t border-base-content/10 pt-4 pb-6 px-4">
-        <label class="flex items-center justify-between cursor-pointer gap-2">
-            <span class="text-sm" style="color: #71717A;">Modo escuro</span>
-            <input type="checkbox" class="toggle toggle-sm" id="darkModeToggle"
-                   onchange="toggleDarkMode()" />
+<aside class="flex min-h-full w-72 flex-col border-r border-base-300 bg-base-100">
+    <div class="flex h-20 items-center gap-3 border-b border-base-300 px-5">
+        <img src="{% static 'images/logo_ifal.png' %}" alt="IFAL" class="h-12 w-auto object-contain" />
+        <div>
+            <p class="font-semibold leading-tight">Acesso IFAL</p>
+            <p class="text-xs text-base-content/60">Controle de salas</p>
+        </div>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto p-3">
+        <ul class="menu gap-1">
+            <li><a href="{{ dashboard_url }}" class="{% if request.path == dashboard_url %}active{% endif %}">Dashboard</a></li>
+            <li><a href="{{ history_url }}" class="{% if request.path == history_url %}active{% endif %}">Histórico</a></li>
+            <li><a href="{{ room_status_url }}" class="{% if request.path == room_status_url %}active{% endif %}">Acesso por sala</a></li>
+
+            {% if user.is_staff %}
+            <li class="menu-title mt-3"><span>Cadastros</span></li>
+            <li><a href="{{ rooms_url }}" class="{% if request.path == rooms_url %}active{% endif %}">Salas</a></li>
+            <li><a href="{{ schedules_url }}" class="{% if request.path == schedules_url %}active{% endif %}">Horários</a></li>
+            <li><a href="{{ teachers_url }}" class="{% if request.path == teachers_url %}active{% endif %}">Professores</a></li>
+
+            <li class="menu-title mt-3"><span>Acesso</span></li>
+            <li><a href="{{ rfid_cards_url }}" class="{% if request.path == rfid_cards_url %}active{% endif %}">Cartões RFID</a></li>
+            <li><a href="{{ access_events_url }}" class="{% if request.path == access_events_url %}active{% endif %}">Auditoria</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="border-t border-base-300 p-4">
+        <label class="flex cursor-pointer items-center justify-between gap-3">
+            <span class="text-sm text-base-content/70">Modo escuro</span>
+            <input type="checkbox" class="toggle toggle-primary toggle-sm" id="darkModeToggle" onchange="toggleDarkMode()" />
         </label>
     </div>
 </aside>
