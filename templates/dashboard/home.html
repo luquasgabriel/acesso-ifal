@@ -17,40 +17,15 @@
         <div class="stats shadow bg-base-100"><div class="stat"><div class="stat-title">Professores ativos</div><div class="stat-value">{{ stats.teachers }}</div></div></div>
     </div>
 
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <section class="xl:col-span-2 bg-base-100 shadow-sm rounded-lg">
-            <div class="p-5">
-                <div class="flex items-center justify-between gap-3">
-                    <h2 class="text-lg font-semibold">Horários vinculados</h2>
-                    <a href="{% url 'dashboard:schedules' %}" class="btn btn-sm btn-ghost">Ver horários</a>
-                </div>
-                <div class="mt-4 overflow-x-auto">
-                    <table class="table table-zebra">
-                        <thead><tr><th>Turma</th><th>Disciplina</th><th>Sala</th><th>Horário</th></tr></thead>
-                        <tbody>
-                            {% for class in classes %}
-                            <tr>
-                                <td>{{ class.class_group }}</td>
-                                <td>{{ class.subject }}</td>
-                                <td>{{ class.room.name }}</td>
-                                <td>{{ class.get_weekday_display }} {{ class.starts_at|time:"H:i" }}-{{ class.ends_at|time:"H:i" }}</td>
-                            </tr>
-                            {% empty %}
-                            <tr><td colspan="4" class="text-center py-8 text-base-content/50">Nenhum horário vinculado ao professor logado.</td></tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section class="bg-base-100 shadow-sm rounded-lg">
-            <div class="p-5">
+    <section class="bg-base-100 shadow-sm rounded-lg">
+        <div class="p-5">
+            <div class="flex items-center justify-between gap-3">
                 <h2 class="text-lg font-semibold">Calendário</h2>
-                {% include "includes/calendar_week.html" %}
+                <a href="{% url 'dashboard:schedules' %}" class="btn btn-sm btn-ghost">Ver horários</a>
             </div>
-        </section>
-    </div>
+            {% include "includes/calendar_week.html" %}
+        </div>
+    </section>
 
     <section class="bg-base-100 shadow-sm rounded-lg">
         <div class="p-5">
