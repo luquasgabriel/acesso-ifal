@@ -12,7 +12,20 @@ from django.views.decorators.http import require_POST
 
 from apps.access.models import RfidCard
 from apps.access.services import process_rfid_event
+from apps.access.services.rfid import mask_rfid_uid
 from apps.access.views.helpers import staff_required
+
+
+RFID_UID_PAYLOAD_KEYS = ("rfid_uid", "uid", "rfid_id", "card_uid")
+
+
+def sanitize_rfid_payload(payload):
+    sanitized = payload.copy()
+    for key in RFID_UID_PAYLOAD_KEYS:
+        if key in sanitized:
+            masked_uid = mask_rfid_uid(sanitized[key])
+            sanitized[key] = f"****{masked_uid}" if masked_uid else ""
+    return sanitized
 
 
 @login_required
@@ -51,7 +64,7 @@ def rfid_event(request):
     except json.JSONDecodeError:
         return JsonResponse({"accepted": False, "error": "JSON invalido."}, status=400)
 
-    raw_uid = payload.get("rfid_uid") or payload.get("uid") or payload.get("rfid_id")
+    raw_uid = payload.get("rfid_uid") or payload.get("uid") or payload.get("rfid_id") or payload.get("card_uid")
     room_code = payload.get("room_code") or payload.get("device_id")
     occurred_at_value = payload.get("occurred_at") or payload.get("timestamp")
     occurred_at = parse_datetime(occurred_at_value) if occurred_at_value else None
@@ -64,12 +77,20 @@ def rfid_event(request):
             status=400,
         )
 
-    event, session = process_rfid_event(raw_uid, room_code, raw_payload=payload, occurred_at=occurred_at)
+    event, session = process_rfid_event(
+        raw_uid,
+        room_code,
+        raw_payload=sanitize_rfid_payload(payload),
+        occurred_at=occurred_at,
+    )
     return JsonResponse(
         {
             "accepted": event.accepted,
             "event_id": event.id,
+            "event_type": event.event_type,
+            "room_status": event.room.status if event.room else None,
             "session_id": session.id if session else None,
+            "session_status": session.status if session else None,
             "denial_reason": event.denial_reason,
         },
         status=200 if event.accepted else 403,

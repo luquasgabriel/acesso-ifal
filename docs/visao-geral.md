@@ -19,8 +19,9 @@ registra eventos de abertura e fechamento recebidos de dispositivos externos.
 ## Integracao com RFID
 
 A aplicacao Django nao controla diretamente o leitor RFID. A pasta
-`rasp_server/` contem uma ponte simples para execucao na Raspberry Pi. Ela le
-UIDs RFID, envia eventos HTTP ao backend e imprime a decisao de acesso em JSON.
+`rasp_server/` contem uma ponte WebSocket para execucao na Raspberry Pi. Ela
+recebe leituras RFID do leitor/ESP32, envia eventos HTTP ao backend e
+responde ao cliente WebSocket com a decisao de acesso.
 
 Eventos enviados ao backend devem conter:
 

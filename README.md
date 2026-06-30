@@ -37,15 +37,22 @@ Acesse `http://127.0.0.1:8000/` e entre com o usuario criado.
 
 ## Raspberry Pi
 
-A ponte RFID fica em `rasp_server/server.py`. Ela le UIDs pela entrada padrao e
-envia eventos ao backend:
+A ponte RFID fica em `rasp_server/server.py`. Ela sobe um servidor WebSocket
+para receber leituras do leitor/ESP32 e encaminha cada evento ao backend Django,
+que valida o cartao, a sala e o horario no banco:
 
 ```bash
 BACKEND_URL=http://127.0.0.1:8000/api/rfid/events/ \
 ROOM_CODE=LAB-01 \
 DEVICE_ID=rasp-lab-01 \
 API_TOKEN= \
+RFID_WS_HOST=0.0.0.0 \
+RFID_WS_PORT=8080 \
 python rasp_server/server.py
 ```
+
+O cliente WebSocket pode enviar JSON com `tipo: "RFID_LIDO"` e `uid`. A resposta
+usa `tipo: "STATUS_ACESSO"`, `autorizado`, `acao`, `comando` e o motivo de
+negacao quando houver.
 
 A documentacao principal do projeto esta em [docs/README.md](docs/README.md).
