@@ -30,20 +30,30 @@
     {% endblock body %}
 
     <script>
+    function updateThemeIcon(theme) {
+        var moon = document.getElementById('themeIconMoon');
+        var sun = document.getElementById('themeIconSun');
+        var isDark = theme === 'acesso-ifal-dark';
+        if (moon) moon.classList.toggle('hidden', isDark);
+        if (sun) sun.classList.toggle('hidden', !isDark);
+    }
+
     function toggleDarkMode() {
-        var toggle = document.getElementById('darkModeToggle');
-        var isDark = toggle ? toggle.checked : false;
-        var theme = isDark ? 'acesso-ifal-dark' : 'acesso-ifal';
+        var current = document.documentElement.getAttribute('data-theme') || 'acesso-ifal';
+        var isDark = current === 'acesso-ifal-dark';
+        var theme = isDark ? 'acesso-ifal' : 'acesso-ifal-dark';
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
+        updateThemeIcon(theme);
     }
 
     (function() {
         var saved = localStorage.getItem('theme');
         if (saved) {
             document.documentElement.setAttribute('data-theme', saved);
-            var toggle = document.getElementById('darkModeToggle');
-            if (toggle) toggle.checked = saved === 'acesso-ifal-dark';
+            updateThemeIcon(saved);
+        } else {
+            updateThemeIcon(document.documentElement.getAttribute('data-theme'));
         }
     })();
     </script>

@@ -9,8 +9,13 @@
 {% url 'dashboard:access_events' as access_events_url %}
 
 <aside class="flex min-h-full w-72 flex-col border-r border-base-300 bg-base-100">
-    <div class="flex h-20 items-center gap-3 border-b border-base-300 px-5">
-        <img src="{% static 'images/logo_ifal.png' %}" alt="IFAL" class="h-12 w-auto object-contain" />
+    <div class="flex h-16 items-center gap-3 border-b border-base-300 px-5">
+        <img
+            src="{% static 'images/logo_ifal.png' %}"
+            alt="IFAL"
+            class="w-auto object-contain"
+            style="height: 40px; max-height: 40px;"
+        />
         <div>
             <p class="font-semibold leading-tight">Acesso IFAL</p>
             <p class="text-xs text-base-content/60">Controle de salas</p>
@@ -36,10 +41,4 @@
         </ul>
     </nav>
 
-    <div class="border-t border-base-300 p-4">
-        <label class="flex cursor-pointer items-center justify-between gap-3">
-            <span class="text-sm text-base-content/70">Modo escuro</span>
-            <input type="checkbox" class="toggle toggle-primary toggle-sm" id="darkModeToggle" onchange="toggleDarkMode()" />
-        </label>
-    </div>
 </aside>
