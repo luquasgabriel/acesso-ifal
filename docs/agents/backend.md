@@ -2,15 +2,15 @@
 
 ## Responsabilidade
 
-Evoluir a aplicacao Django, modelos, servicos, endpoints, admin e integracoes do
-Acesso IFAL.
+Evoluir a aplicacao Django, modelos, servicos, endpoints, admin e integracao
+RFID do Acesso IFAL.
 
 ## Diretrizes
 
 - Escrever codigo em ingles.
 - Usar modelos Django para persistencia relacional.
 - Manter regras de negocio em servicos ou funcoes de dominio testaveis.
-- Persistir eventos de RFID e QR Code para auditoria.
+- Persistir eventos RFID para auditoria.
 - Evitar colocar regra critica apenas no frontend.
 - Criar migrations sempre que modelos forem alterados.
 
@@ -25,8 +25,8 @@ Antes de implementar, consultar:
 
 ## Prioridades tecnicas
 
-1. Separar autenticacao de informacoes academicas.
-2. Criar entidades de salas, aulas, sessoes e presencas.
-3. Implementar validacoes de abertura e fechamento.
-4. Criar endpoints para eventos externos.
+1. Manter autenticacao separada das informacoes de professor.
+2. Preservar modelos de professores, cartoes RFID, salas, horarios e sessoes.
+3. Implementar validacoes de abertura e fechamento no backend.
+4. Manter endpoint para eventos externos RFID.
 5. Cobrir regras principais com testes.

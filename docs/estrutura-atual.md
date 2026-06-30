@@ -6,67 +6,41 @@ O projeto esta em uma base Django com a seguinte estrutura principal:
 
 - `config/`: configuracoes Django, rotas, ASGI e WSGI;
 - `apps/accounts/`: app de usuarios e autenticacao;
-- `apps/access/`: app previsto para acesso, RFID, salas, sessoes e auditoria;
-- `apps/attendance/`: app previsto para presenca e QR Code;
+- `apps/access/`: dominio de professores, cartoes RFID, salas, horarios,
+  sessoes e auditoria;
 - `theme/`: app de tema com Tailwind e DaisyUI;
 - `templates/`: templates globais do projeto;
+- `rasp_server/`: ponte para envio de eventos RFID a partir da Raspberry Pi;
 - `manage.py`: entrada de comandos Django;
 - `requirements.txt`: dependencias Python;
 - `README.md`: resumo do projeto.
 
-## Pontos adequados aos requisitos
+## Pontos implementados
 
-- O projeto ja usa Django, uma escolha adequada para CRUD administrativo,
-  autenticacao, permissoes e dashboards.
-- O app `accounts` ja define `AUTH_USER_MODEL` customizado, o que facilita
-  evoluir perfis de professor e aluno sem depender diretamente do usuario
-  padrao do Django.
-- O banco configurado e PostgreSQL, adequado para registrar eventos,
-  relacionamentos e auditoria.
+- O projeto usa Django e o admin nativo para cadastro dos dados principais.
+- O app `accounts` define `AUTH_USER_MODEL` customizado.
+- O app `access` concentra o dominio operacional.
+- O backend possui endpoint para receber eventos RFID.
+- O servico de RFID normaliza e valida UID, sala, professor, horario e sessao.
+- Eventos aceitos e negados sao persistidos em `AccessEvent`.
 - O timezone e idioma estao configurados para contexto brasileiro:
   `LANGUAGE_CODE = 'pt-br'` e `TIME_ZONE = 'America/Maceio'`.
-- O app `theme` ja prepara uma base visual com Tailwind.
 
-## Lacunas em relacao aos requisitos
+## Estrutura adotada
 
-- Os apps `access` e `attendance` ainda estao sem modelos, servicos e
-  endpoints de dominio implementados.
-- O modelo `User` ainda nao diferencia professor, aluno e administrador.
-- Ainda nao existem entidades para `Student`, `Teacher`, `Room`,
-  `ClassSchedule`, `AccessSession`, `AttendanceRecord` e `AccessEvent`.
-- Ainda nao existem endpoints ou servicos para receber eventos da integracao
-  externa via sockets/RFID.
-- Ainda nao existem telas para cadastro de alunos, professores, salas e horarios.
-- Ainda nao existe regra de negocio para abrir, fechar ou validar sessoes de
-  aula.
-- O template base ainda esta com textos padrao de exemplo do Django Tailwind.
-- O arquivo `requirements.txt` aparenta estar codificado com bytes nulos
-  possivelmente por UTF-16/UTF-16LE. Isso pode atrapalhar instalacoes com
-  `pip install -r requirements.txt` se nao for normalizado para UTF-8.
+Os apps Django do projeto ficam dentro do pacote `apps/`.
 
-## Estrutura adotada para evolucao
+- `apps.accounts`: autenticacao e usuarios;
+- `apps.access`: regras e dados de acesso por RFID.
 
-Os apps Django do projeto devem ficar dentro do pacote `apps/`.
+O cadastro de professores, cartoes RFID, salas e horarios ocorre pelo Django
+Admin. As telas internas sao somente leitura e servem para acompanhamento
+operacional.
 
-- `apps/accounts`: autenticacao, usuarios e papeis gerais;
-- `apps/access`: salas, cartoes RFID, aulas planejadas, abertura e fechamento
-  de sessoes, eventos externos e auditoria;
-- `apps/attendance`: registros de entrada, saida e status de presenca por QR
-  Code.
+## Pontos de atencao
 
-Essa divisao mantem o app `accounts` focado em autenticacao e concentra o
-dominio operacional em dois apps: `access` e `attendance`.
-
-A estrutura interna dos apps de dominio deve seguir o padrao documentado no
-`docs/desenvolvimento.md`: pacotes `models/`, `views/` e `services/`, com
-modelos e views separados por arquivo, uso de function based views e criacao de
-`constants`, `utils` e outros modulos somente quando necessario.
-
-## Proxima etapa tecnica recomendada
-
-1. Definir os modelos de dominio em ingles.
-2. Criar migrations para as entidades principais.
-3. Registrar os modelos no Django Admin.
-4. Implementar servicos de negocio para validar abertura, fechamento e presenca.
-5. Criar endpoints para eventos RFID e QR Code.
-6. Substituir o template base de exemplo por uma interface inicial do sistema.
+- A integracao fisica RFID depende da configuracao da Raspberry Pi.
+- O endpoint RFID pode exigir `RFID_API_TOKEN` quando a variavel estiver
+  configurada.
+- As tolerancias de abertura estao definidas no servico de RFID e podem ser
+  promovidas para configuracao persistida quando necessario.

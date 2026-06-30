@@ -2,44 +2,42 @@
 
 ## Objetivo
 
-O Acesso IFAL tem como objetivo automatizar o controle de uso das salas e
-registrar a presenca de professores e alunos com base em eventos verificaveis:
-RFID para professores e QR Code para alunos.
+O Acesso IFAL organiza os dados necessarios para controlar o uso de salas por
+RFID. O sistema mantem professores, cartoes RFID, salas e horarios de aula, e
+registra eventos de abertura e fechamento recebidos de dispositivos externos.
 
 ## Contexto operacional
 
-1. O professor chega no horario da aula.
-2. O professor escaneia o cartao RFID no leitor da sala.
-3. O sistema valida se existe aula prevista para aquele professor, sala e
-   horario.
-4. A sala e liberada e uma sessao de aula e iniciada.
-5. Os alunos escaneiam o QR Code da sala para registrar entrada.
-6. Ao final, os alunos escaneiam novamente o QR Code para registrar saida.
-7. O professor escaneia o cartao RFID para trancar a sala.
-8. O sistema encerra a sessao de aula e consolida os registros.
+1. O professor aproxima o cartao RFID do leitor da sala.
+2. A Raspberry Pi recebe a leitura e envia o evento ao backend Django.
+3. O backend valida o cartao, o professor, a sala e o horario.
+4. Se a validacao permitir, a sala e marcada como em uso e uma sessao e aberta.
+5. Ao final da aula, o professor aproxima o cartao novamente.
+6. O backend valida a sessao aberta, fecha a sessao e libera a sala.
+7. Todas as tentativas aceitas e negadas ficam registradas para auditoria.
 
 ## Integracao com RFID
 
-A integracao fisica com o leitor RFID esta fora deste repositorio por enquanto.
-Ela ja existe externamente usando sockets. Este sistema deve expor ou consumir
-uma interface clara para receber eventos como:
+A aplicacao Django nao controla diretamente o leitor RFID. A pasta
+`rasp_server/` contem uma ponte simples para execucao na Raspberry Pi. Ela le
+UIDs RFID, envia eventos HTTP ao backend e imprime a decisao de acesso em JSON.
 
-- codigo/UID do cartao RFID;
-- identificador da sala ou dispositivo;
-- tipo de evento detectado;
-- data e hora do evento;
-- metadados tecnicos do leitor, quando existirem.
+Eventos enviados ao backend devem conter:
 
-## Escopo inicial
+- UID do cartao RFID;
+- codigo da sala;
+- identificador do dispositivo, quando disponivel;
+- data e hora da leitura;
+- metadados tecnicos relevantes.
 
-O sistema deve catalogar e relacionar:
+## Escopo
 
-- alunos;
+O sistema deve manter:
+
+- usuarios autenticaveis;
 - professores;
+- cartoes RFID vinculados a professores;
 - salas;
-- cartoes RFID de professores;
-- QR Codes de salas;
-- horarios e duracao das aulas;
-- sessoes de liberacao de sala;
-- registros de presenca do professor;
-- registros de entrada e saida dos alunos.
+- horarios de aula;
+- sessoes de acesso;
+- eventos de auditoria.

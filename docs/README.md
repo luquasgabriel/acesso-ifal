@@ -1,9 +1,8 @@
 # Documentacao do Acesso IFAL
 
-O Acesso IFAL e um sistema para controlar a liberacao de salas de aula e o
-registro de presenca de professores e alunos. A abertura e o fechamento da sala
-sao feitos pelo professor com um cartao RFID. Durante o periodo em que a sala
-esta liberada, os alunos registram entrada e saida escaneando o QR Code da sala.
+O Acesso IFAL e um sistema para catalogar professores, cartoes RFID, salas e
+horarios de aula. O backend valida eventos RFID recebidos de uma Raspberry Pi e
+registra a abertura ou fechamento de salas.
 
 ## Indice
 

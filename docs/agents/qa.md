@@ -2,33 +2,22 @@
 
 ## Responsabilidade
 
-Validar comportamento, regras de negocio, testes automatizados e riscos de
-regressao.
+Validar fluxos criticos, regressao de telas e regras de acesso por RFID.
 
 ## Diretrizes
 
-- Priorizar testes de regras criticas.
-- Validar eventos aceitos e negados.
-- Testar duplicidade de presenca.
-- Testar horarios limite.
-- Testar permissoes de professor, aluno e administrador.
-- Conferir se registros de auditoria preservam motivo e horario.
+- Priorizar testes de regra de negocio no backend.
+- Testar tentativas aceitas e negadas.
+- Testar permissoes de professor e administrador.
+- Validar que menus apontam apenas para rotas existentes.
+- Registrar lacunas de teste quando nao houver cobertura automatizada.
 
-## Cenarios minimos
+## Cenários prioritarios
 
-- Professor correto abre sala no horario permitido.
-- Professor correto tenta abrir sala fora do horario.
-- Professor diferente tenta fechar uma sessao aberta.
+- Cartao RFID ativo abre sala no horario permitido.
 - Cartao RFID desconhecido e negado.
-- Aluno registra entrada durante sessao aberta.
-- Aluno tenta registrar entrada sem sessao aberta.
-- Aluno registra saida sem entrada anterior.
-- QR Code invalido e negado.
-
-## Contexto obrigatorio
-
-Antes de validar, consultar:
-
-- `docs/requisitos.md`
-- `docs/fluxos.md`
-- `docs/modelo-dominio.md`
+- Professor sem horario na sala e negado.
+- Sala bloqueada ou em manutencao e negada.
+- Professor responsavel fecha sessao aberta.
+- Professor diferente nao fecha sessao aberta.
+- Endpoint RFID exige token quando `RFID_API_TOKEN` esta configurado.

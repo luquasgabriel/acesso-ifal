@@ -1,15 +1,15 @@
 # Modelo de dominio
 
-Este documento descreve as entidades esperadas para o Acesso IFAL. Os nomes
-tecnicos sugeridos estao em ingles para orientar a implementacao.
+Este documento descreve as entidades usadas no Acesso IFAL. Os nomes tecnicos
+ficam em ingles para orientar a implementacao.
 
 ## Entidades principais
 
 ### User
 
-Usuario autenticavel do sistema. Ja existe no app `accounts`.
+Usuario autenticavel do sistema. Existe no app `accounts`.
 
-Campos atuais:
+Campos principais:
 
 - `username`
 - `email`
@@ -17,88 +17,64 @@ Campos atuais:
 - `last_name`
 - campos padrao do `AbstractUser`
 
-Evolucao recomendada:
-
-- adicionar ou relacionar um perfil para identificar papeis como `teacher` e `student`;
-- manter autenticacao separada das informacoes academicas especificas.
-
-### Student
-
-Representa o aluno catalogado.
-
-Campos sugeridos:
-
-- `user`
-- `registration_number`
-- `course`
-- `is_active`
-
 ### Teacher
 
 Representa o professor catalogado.
 
-Campos sugeridos:
+Campos principais:
 
 - `user`
 - `employee_number`
 - `is_active`
 
-Os cartoes RFID devem ser associados ao professor por meio de `RfidCard`.
-
 ### RfidCard
 
 Representa um cartao RFID associado a um professor.
 
-Campos sugeridos:
+Campos principais:
 
-- `rfid_id`
 - `teacher`
+- `rfid_hash`
+- `rfid_suffix`
 - `is_active`
 - `issued_at`
 - `revoked_at`
 
-`rfid_id` e o codigo unico lido pelo leitor RFID. Ele deve ser obrigatorio,
-normalizado antes de salvar e unico entre cartoes ativos. Exemplos de
-normalizacao: remover espacos, remover separadores e padronizar letras
-hexadecimais em maiusculo. No sistema podera haver repeticao, dado que o
-cartao pode ser repassado. Mas para isso, o anterior deve ter data de
-"revoke".
-
-O sistema deve armazenar um hash do ID em vez do valor bruto, 
-mantendo apenas um sufixo mascarado para suporte operacional.
+O UID RFID deve ser normalizado antes de gerar o hash. O sistema nao deve
+armazenar o UID bruto.
 
 ### Room
 
 Representa uma sala fisica.
 
-Campos sugeridos:
+Campos principais:
 
 - `name`
 - `code`
 - `location`
 - `capacity`
-- `qr_code_token`
 - `status`
 
 ### ClassSchedule
 
-Representa uma aula prevista.
+Representa uma aula prevista em horario recorrente.
 
-Campos sugeridos:
+Campos principais:
 
 - `teacher`
 - `room`
 - `subject`
+- `class_group`
+- `weekday`
 - `starts_at`
 - `ends_at`
-- `weekday`, se o horario for recorrente;
 - `is_active`
 
 ### AccessSession
 
 Representa a liberacao real de uma sala para uma aula.
 
-Campos sugeridos:
+Campos principais:
 
 - `schedule`
 - `teacher`
@@ -109,23 +85,11 @@ Campos sugeridos:
 - `opened_by_event`
 - `closed_by_event`
 
-### AttendanceRecord
-
-Representa a presenca de um aluno em uma sessao de aula.
-
-Campos sugeridos:
-
-- `session`
-- `student`
-- `checked_in_at`
-- `checked_out_at`
-- `status`
-
 ### AccessEvent
 
-Representa eventos recebidos dos leitores RFID, QR Codes ou outras origens.
+Representa eventos recebidos da integracao RFID.
 
-Campos sugeridos:
+Campos principais:
 
 - `source`
 - `event_type`
@@ -136,36 +100,21 @@ Campos sugeridos:
 - `denial_reason`
 - `raw_payload`
 
-`identifier` deve guardar o identificador recebido no evento. Para eventos RFID,
-esse valor corresponde ao `rfid_id` lido ou ao hash equivalente; para eventos
-de QR Code, corresponde ao token do QR Code.
+`identifier` deve guardar apenas uma forma mascarada do identificador recebido.
 
 ## Relacionamentos principais
 
 - `Teacher` possui um ou mais `RfidCard`.
-- `Room` possui um `qr_code_token` ativo.
-- `ClassSchedule` relaciona professor, sala e turma.
+- `ClassSchedule` relaciona professor, sala e horario.
 - `AccessSession` nasce de uma liberacao valida por RFID.
-- `AttendanceRecord` pertence a uma `AccessSession` e a um `Student`.
-- `AccessEvent` deve permitir auditar o motivo de cada liberacao, bloqueio,
-  entrada ou saida.
+- `AccessEvent` audita cada tentativa de abertura ou fechamento.
 
 ## Organizacao em apps
 
-A implementacao Django deve manter os apps do projeto dentro do pacote
-`apps/`.
+- `apps.accounts`: autenticacao e usuarios.
+- `apps.access`: professores, cartoes RFID, salas, horarios, sessoes e eventos.
 
-- `apps.accounts`: autenticacao, usuarios e evolucao de papeis gerais.
-- `apps.access`: regras e registros ligados a salas, cartoes RFID,
-  aulas planejadas, sessoes de acesso e eventos de auditoria.
-- `apps.attendance`: registros de entrada e saida por QR Code e calculo do
-  status de presenca.
-
-Os apps `access` e `attendance` representam os dois apps de dominio previstos
-para esta etapa. A existencia dos apps nao significa que todos os modelos e
-servicos ja estejam implementados.
-
-## Estados sugeridos
+## Estados
 
 ### Room.status
 
@@ -180,16 +129,7 @@ servicos ja estejam implementados.
 - `closed`
 - `cancelled`
 
-### AttendanceRecord.status
-
-- `present`
-- `partial`
-- `absent`
-- `invalid`
-
 ### AccessEvent.event_type
 
 - `rfid_open_attempt`
 - `rfid_close_attempt`
-- `qr_check_in`
-- `qr_check_out`
