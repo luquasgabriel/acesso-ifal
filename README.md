@@ -35,9 +35,9 @@ python manage.py runserver
 
 Acesse `http://127.0.0.1:8000/` e entre com o usuario criado.
 
-## Raspberry Pi
+## ESP32
 
-A ponte RFID fica em `rasp_server/server.py`. Ela sobe um servidor WebSocket
+A ponte RFID fica em `esp_server/server.py`. Ela sobe um servidor WebSocket
 para receber leituras do leitor/ESP32 e encaminha cada evento ao backend Django,
 que valida o cartao, a sala e o horario no banco:
 
@@ -48,7 +48,7 @@ DEVICE_ID=rasp-lab-01 \
 API_TOKEN= \
 RFID_WS_HOST=0.0.0.0 \
 RFID_WS_PORT=8080 \
-python rasp_server/server.py
+python esp_server/server.py
 ```
 
 O cliente WebSocket pode enviar JSON com `tipo: "RFID_LIDO"` e `uid`. A resposta

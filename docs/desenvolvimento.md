@@ -39,7 +39,7 @@ Variaveis esperadas pelo `config/settings.py`:
 `RFID_API_TOKEN` e opcional. Quando configurada, o endpoint RFID exige header
 `Authorization: Bearer <token>`.
 
-Variaveis usadas pela ponte RFID em `rasp_server/server.py`:
+Variaveis usadas pela ponte RFID em `esp_server/server.py`:
 
 - `BACKEND_URL`
 - `ROOM_CODE`

@@ -10,8 +10,7 @@ O projeto esta em uma base Django com a seguinte estrutura principal:
   sessoes e auditoria;
 - `theme/`: app de tema com Tailwind e DaisyUI;
 - `templates/`: templates globais do projeto;
-- `rasp_server/`: ponte WebSocket para receber leituras RFID da Raspberry Pi ou
-  ESP32 e encaminhar eventos ao backend;
+- `_server/`: ponte WebSocket para receber leituras RFID do ESP32 e encaminhar eventos ao backend;
 - `manage.py`: entrada de comandos Django;
 - `requirements.txt`: dependencias Python;
 - `README.md`: resumo do projeto.
@@ -40,8 +39,7 @@ operacional.
 
 ## Pontos de atencao
 
-- A integracao fisica RFID depende da configuracao da ponte WebSocket na
-  Raspberry Pi ou ESP32.
+- A integracao fisica RFID depende da configuracao da ponte WebSocket no ESP32.
 - O endpoint RFID pode exigir `RFID_API_TOKEN` quando a variavel estiver
   configurada.
 - As tolerancias de abertura estao definidas no servico de RFID e podem ser

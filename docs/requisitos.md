@@ -11,7 +11,7 @@
 
 ### Cartoes RFID
 
-- O sistema deve validar o UID do cartao RFID recebido da Raspberry Pi.
+- O sistema deve validar o UID do cartao RFID recebido do ESP32.
 - O UID deve ser normalizado antes da validacao.
 - O valor bruto do UID nao deve ser armazenado.
 - O sistema deve armazenar hash do UID e apenas um sufixo mascarado para apoio

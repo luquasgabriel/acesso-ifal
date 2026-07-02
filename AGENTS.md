@@ -22,5 +22,5 @@ Antes de propor ou implementar mudancas, consulte:
 ## Contexto do sistema
 
 O Acesso IFAL e um sistema Django para controle de abertura e fechamento de
-salas com RFID. A integracao fisica RFID roda fora da aplicacao Django, em uma
-Raspberry Pi, e deve ser tratada como fonte de eventos enviada ao backend.
+salas com RFID. A integracao fisica RFID roda fora da aplicacao Django, em um
+ESP32, e deve ser tratada como fonte de eventos enviada ao backend.

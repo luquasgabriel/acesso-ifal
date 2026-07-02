@@ -1,7 +1,7 @@
 # Documentacao do Acesso IFAL
 
 O Acesso IFAL e um sistema para catalogar professores, cartoes RFID, salas e
-horarios de aula. O backend valida eventos RFID recebidos de uma Raspberry Pi e
+horarios de aula. O backend valida eventos RFID recebidos de um ESP32 e
 registra a abertura ou fechamento de salas.
 
 ## Indice

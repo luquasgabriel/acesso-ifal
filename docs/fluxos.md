@@ -3,7 +3,7 @@
 ## Abertura da sala pelo professor
 
 1. O leitor RFID detecta o cartao do professor.
-2. A Raspberry Pi envia o evento ao backend.
+2. O ESP32 envia o evento ao backend.
 3. O backend localiza o cartao RFID ativo pelo hash do UID normalizado.
 4. O backend identifica o professor associado.
 5. O backend verifica se existe horario ativo para o professor na sala e no
@@ -17,7 +17,7 @@ Caso a regra falhe, o evento deve ser registrado como negado com o motivo.
 ## Fechamento da sala pelo professor
 
 1. O professor aproxima o cartao RFID do leitor da sala.
-2. A Raspberry Pi envia o evento ao backend.
+2. O ESP32 envia o evento ao backend.
 3. O backend identifica a `AccessSession` aberta para a sala.
 4. O backend valida se o cartao pertence ao professor responsavel pela sessao.
 5. O backend grava `closed_at`.
